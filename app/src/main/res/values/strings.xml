@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SPHTech</string>
+    <string name="seacrh">seacrh</string>
+    <string name="year">Year</string>
+    <string name="qu_year">quarter of year</string>
+    <string name="tol_mobile_network">Total Mobile Network</string>
+    <string name="loading">Loading...</string>
+    <string name="hint_enterLimit">Enter limit</string>
+    <string name="offline_mode">offline mode</string>
+</resources>
