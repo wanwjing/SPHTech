@@ -31,14 +31,13 @@ class TotalMolResultBean : Serializable {
     }
 
     fun trendStatus() : ETrend{
-        var total : Double = 0.0
 
-        for(item in this.itemListBeans!!){
-            total -= item.mobileVol!!
-        }
-        if(total < 0){
+        var size = this.itemListBeans!!.size - 1
+        var  total = this.itemListBeans?.get(size)!!.mobileVol - this.itemListBeans?.get(0)!!.mobileVol
+
+        if(total > 0){
             return ETrend.UP
-        }else if(total > 0){
+        }else if(total < 0){
             return ETrend.DOWN
         }
 

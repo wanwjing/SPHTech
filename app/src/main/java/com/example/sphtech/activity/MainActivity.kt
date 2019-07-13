@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import retrofit2.Call
 
 
+
 class MainActivity : BaseActivity() {
 
     // variable
@@ -90,7 +91,7 @@ class MainActivity : BaseActivity() {
 
         if(isOnlineStatus){
             showLoading(true)
-            ApiStoreRestClient.instance.getUserList(data, object : RetrofitEventListener {
+            ApiStoreRestClient.instance.getList(data, object : RetrofitEventListener {
                 override  fun onSuccess(call: Call<*>, response: Any) {
                     if (response is StoreBean) {
                         var storeBean = response as StoreBean
@@ -129,6 +130,7 @@ class MainActivity : BaseActivity() {
 
     }
 
+
     private fun uiUpdate(){
         if(isOnlineStatus){
             this.llSearch.visibility = View.VISIBLE
@@ -138,10 +140,13 @@ class MainActivity : BaseActivity() {
         this.rv_content.adapter?.notifyDataSetChanged();
     }
 
-    private fun callCacheDataToLocal(){
+    // put data to device
+    fun callCacheDataToLocal(){
         UtilSharedPreferences.getInstance(this)?.saveData(dataCacheTag,Gson().toJson(wsRItemListBeans))
     }
-    private fun callCacheDataFromLocal(){
+
+    // get data from device
+    fun callCacheDataFromLocal(){
         val cacheData = UtilSharedPreferences.getInstance(this)?.getData(dataCacheTag)
         val itemType = object : TypeToken<ArrayList<TotalMolResultBean>>() {}.type
         if(cacheData != ""){

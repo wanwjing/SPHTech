@@ -17,7 +17,7 @@ class ApiStoreRestClient {
         val instance = ApiStoreRestClient()
     }
 
-    fun getUserList(data :HashMap<String, String> ,retrofitEventListener: RetrofitEventListener) {
+    fun getList(data :HashMap<String, String> ,retrofitEventListener: RetrofitEventListener) {
 
         val retrofit = UtilRetrofitWs.retrofitClient
         apiStoreBean = retrofit.create(ApiStoreBean::class.java )

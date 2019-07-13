@@ -31,13 +31,6 @@ class ResultDetailActivity : BaseActivity() {
 
         var series = BarGraphSeries(
             setData().toTypedArray()
-//            arrayOf(
-//                DataPoint(0.0, 1.0),
-//                DataPoint(1.0, 5.0),
-//                DataPoint(2.0, 3.0),
-//                DataPoint(3.0, 2.0),
-//                DataPoint(4.0, 6.0)
-//            )
         )
         series.setSpacing(50);
         // set Max Min plot
