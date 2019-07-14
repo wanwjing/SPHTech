@@ -7,6 +7,7 @@ import com.example.sphtech.R
 import com.example.sphtech.model.bean.TotalMolResultBean
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
+import kotlinx.android.synthetic.main.activity_result.*
 
 
 import kotlinx.android.synthetic.main.activity_result.view.*
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_result.view.*
 
 class ResultDetailActivity : BaseActivity() {
 
+
     companion object{
         val stringTag = "ResultDetailActivity"
     }
@@ -25,22 +27,25 @@ class ResultDetailActivity : BaseActivity() {
     override val uiContentId: Int
         get() = R.layout.activity_result
 
+    override fun uiData() {
+        totalMolResultBean  = getIntent().getSerializableExtra(stringTag) as TotalMolResultBean?
+    }
 
-    override fun uiFlow(context: Context, viewUi: View) {
-        totalMolResultBean  = getIntent().getSerializableExtra(stringTag) as TotalMolResultBean?;
+    override fun uiFlow(context: Context) {
+
 
         var series = BarGraphSeries(
             setData().toTypedArray()
         )
         series.setSpacing(50);
         // set Max Min plot
-        viewUi.gvGaph.title = "Amount the of data during "+ totalMolResultBean?.year
-        viewUi.gvGaph.getGridLabelRenderer().setNumHorizontalLabels(4);
-        viewUi.gvGaph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
-        viewUi.gvGaph.getGridLabelRenderer().horizontalAxisTitle = getString(R.string.qu_year)
-        viewUi.gvGaph.viewport.setMaxX(4.0)
+        gvGaph.title = "Amount the of data during "+ totalMolResultBean?.year
+        gvGaph.getGridLabelRenderer().setNumHorizontalLabels(4);
+        gvGaph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
+        gvGaph.getGridLabelRenderer().horizontalAxisTitle = getString(R.string.qu_year)
+        gvGaph.viewport.setMaxX(4.0)
 
-        viewUi.gvGaph.addSeries(series)
+        gvGaph.addSeries(series)
     }
 
     private fun setData() : ArrayList<DataPoint>{

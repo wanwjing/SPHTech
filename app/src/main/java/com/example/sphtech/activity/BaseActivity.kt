@@ -15,23 +15,26 @@ import com.example.sphtech.R
 import com.example.sphtech.util.UtilInternet
 
 
-abstract class BaseActivity : AppCompatActivity() ,UtilInternet.ConnectivityReceiverListener {
+abstract class BaseActivity : AppCompatActivity() , UtilInternet.ConnectivityReceiverListener {
 
     // set uiFlow create Action here
-    abstract fun uiFlow(context: Context, viewUi : View)
-
+    abstract fun uiFlow(context: Context)
+    abstract fun uiData()
     // set XML Id here
     abstract val uiContentId : Int;
 
-    var isOnlineStatus = false
+    var isOnlineStatus : Boolean = false
     var dialog : AlertDialog? = null
-    var dataCacheTag = "cache value sph"
+    private val internet = UtilInternet()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
 
-        registerReceiver(UtilInternet(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        internet.register(this,IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+        isOnlineStatus = UtilInternet.isConnected(this)
 
         val inflater = applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(uiContentId, null)
@@ -44,7 +47,9 @@ abstract class BaseActivity : AppCompatActivity() ,UtilInternet.ConnectivityRece
         llContent.addView(view)
 
         setupDialog()
-        uiFlow(this,view);
+
+        uiData()
+        uiFlow(this);
 
     }
 
@@ -66,6 +71,10 @@ abstract class BaseActivity : AppCompatActivity() ,UtilInternet.ConnectivityRece
         }
     }
 
+    override fun onDestroy() {
+        internet.unregister(this)
+        super.onDestroy()
+    }
 
     private fun setupDialog(){
         val builder = AlertDialog.Builder(this)
